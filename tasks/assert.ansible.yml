@@ -27,9 +27,8 @@
   block:
     - name: Assert no duplicate domains
       ansible.builtin.assert:
-        that: >-
-          {{ certbot_combined_list | unique | length ==
-          certbot_combined_list | length }}
+        that: certbot_combined_list | unique |
+          length == certbot_combined_list | length
       no_log: true
   rescue:
     - name: Fail duplicate domains
@@ -44,7 +43,7 @@
   block:
     - name: Assert email is not empty
       ansible.builtin.assert:
-        that: "{{ certbot_used_email != '' }}"
+        that: certbot_used_email != ''
       with_items: "{{ certbot_certs }}"
       loop_control:
         loop_var: cert_item
@@ -61,7 +60,7 @@
   block:
     - name: Assert key_type is valid
       ansible.builtin.assert:
-        that: "{{ certbot_used_key_type in certbot_valid_key_type }}"
+        that: certbot_used_key_type in certbot_valid_key_type
       with_items: "{{ certbot_certs }}"
       loop_control:
         loop_var: cert_item
@@ -79,7 +78,7 @@
   block:
     - name: Assert key_curve is valid
       ansible.builtin.assert:
-        that: "{{ certbot_used_key_curve in certbot_valid_key_curve }}"
+        that: certbot_used_key_curve in certbot_valid_key_curve
       with_items: "{{ certbot_certs }}"
       loop_control:
         loop_var: cert_item
@@ -98,8 +97,7 @@
   block:
     - name: Assert key_curve is valid for Let's Encrypt
       ansible.builtin.assert:
-        that: >-
-          {{ certbot_used_key_curve in certbot_letsencrypt_valid_key_curve }}
+        that: certbot_used_key_curve in certbot_letsencrypt_valid_key_curve
       with_items: "{{ certbot_certs }}"
       loop_control:
         loop_var: cert_item
