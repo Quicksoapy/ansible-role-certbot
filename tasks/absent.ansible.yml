@@ -6,3 +6,4 @@
       - python3-certbot-nginx
       - python3-certbot-apache
     state: absent
+    purge: true
